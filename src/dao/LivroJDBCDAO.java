@@ -89,7 +89,7 @@ public class LivroJDBCDAO implements ILivroDAO {
 			ResultSet resultSet = preparedStatement.executeQuery();
 			
 			while (resultSet.next()) {
-				Livro livro = map(resultSet);
+				Livro livro = mapLivro(resultSet);
 				listaLivros.add(livro);
 			}
 		} catch (SQLException e) {
@@ -105,7 +105,7 @@ public class LivroJDBCDAO implements ILivroDAO {
 		return listaLivros;
 	}
 
-	private Livro map(ResultSet rs) throws SQLException {
+	public Livro mapLivro(ResultSet rs) throws SQLException {
 		Livro livro = new Livro();
 		livro.setId(rs.getInt("id"));
 		livro.setTitulo(rs.getString("titulo"));
@@ -131,7 +131,7 @@ public class LivroJDBCDAO implements ILivroDAO {
 			ResultSet resultSet = preparedStatement.executeQuery();
 			
 			while (resultSet.next()) {
-				Livro livro = map(resultSet);
+				Livro livro = mapLivro(resultSet);
 				listaLivros.add(livro);
 			}
 		} catch (SQLException e) {
@@ -158,7 +158,7 @@ public class LivroJDBCDAO implements ILivroDAO {
 			
 			ResultSet resultSet = preparedStatement.executeQuery();
 			if(resultSet.next())
-				livro = map(resultSet);
+				livro = mapLivro(resultSet);
 			
 		} catch (SQLException e) {
 			throw new DAOException("Operação não realizada com sucesso.", e);

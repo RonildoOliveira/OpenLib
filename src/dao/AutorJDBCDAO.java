@@ -84,7 +84,7 @@ public class AutorJDBCDAO implements IAutorDAO {
 			ResultSet resultSet = preparedStatement.executeQuery();
 			
 			while (resultSet.next()) {
-				Autor autor = map(resultSet);
+				Autor autor = mapAutor(resultSet);
 				listaAutores.add(autor);
 			}
 		} catch (SQLException e) {
@@ -100,7 +100,7 @@ public class AutorJDBCDAO implements IAutorDAO {
 		return listaAutores;
 	}
 
-	private Autor map(ResultSet rs) throws SQLException {
+	public Autor mapAutor(ResultSet rs) throws SQLException {
 		Autor autor = new Autor();
 		autor.setId(rs.getInt("id"));
 		autor.setNome(rs.getString("nome"));
@@ -120,7 +120,7 @@ public class AutorJDBCDAO implements IAutorDAO {
 			ResultSet resultSet = preparedStatement.executeQuery();
 			
 			while (resultSet.next()) {
-				Autor autor = map(resultSet);
+				Autor autor = mapAutor(resultSet);
 				listaAutores.add(autor);
 			}
 		} catch (SQLException e) {
@@ -150,7 +150,7 @@ public class AutorJDBCDAO implements IAutorDAO {
 			ResultSet resultSet = preparedStatement.executeQuery();
 			
 			while (resultSet.next()) {
-				autor = map(resultSet);
+				autor = mapAutor(resultSet);
 			}
 		} catch (SQLException e) {
 			throw new DAOException("Operação não realizada com sucesso.", e);
