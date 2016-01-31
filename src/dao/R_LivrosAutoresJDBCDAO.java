@@ -14,7 +14,7 @@ import entity.Livro;
 import entity.relations.LivrosAutores;
 import factory.ConnectionFactory;
 
-public class LivrosAutoresJDBCDAO implements IR_LivrosAutoresDAO {
+public class R_LivrosAutoresJDBCDAO implements IR_LivrosAutoresDAO {
 
 	private Connection connection = null;
 	

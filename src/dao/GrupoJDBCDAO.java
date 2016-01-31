@@ -1,6 +1,5 @@
 package dao;
 
-import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,32 +7,30 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import dao.interfaces.IProfessorDAO;
+import dao.interfaces.IGrupoDAO;
+import entity.Grupo;
 import entity.Professor;
-import entity.Usuario;
 import factory.ConnectionFactory;
 
-public class ProfessorJDBCDAO implements IProfessorDAO {
+public class GrupoJDBCDAO implements IGrupoDAO {
 
 	private Connection connection = null;
-	private ResultSet resultSetName;
 	
-	public void cadastrarProfessor(Professor professor) {
-		try {
-			
+	public void cadastrarGrupo(Grupo grupo) {
+		try {			
 			connection = ConnectionFactory.getConnection();
-			String insert_sql = "INSERT INTO PROFESSOR ("
-					+ "codigo,"
-					+ "id_usuario"
-					+ ") VALUES (?, ?)";
+			String insert_sql = "INSERT INTO GRUPO ("
+					+ "nome,"
+					+ "id_professor"
+					+ ") VALUES (?,?)";
 			
 			PreparedStatement preparedStatement;
 			
 			preparedStatement = connection.prepareStatement(insert_sql);
 			
-			preparedStatement.setString(1, professor.getCodigo());
-			preparedStatement.setInt(2, professor.getId_usuario());
-						
+			preparedStatement.setString(1, grupo.getNome());
+			preparedStatement.setInt(2, grupo.getProfessor().getId());
+					
 			preparedStatement.executeUpdate();
 			
 		} catch (SQLException e) {
@@ -45,15 +42,15 @@ public class ProfessorJDBCDAO implements IProfessorDAO {
 			} catch (SQLException e) {
 				throw new DAOException("Não foi possível fechar a conexão.",e);
 			}
-		}		
+		}
 	}
 
-	public void removerProfessorPorID(int idProfessor) {
+	public void removerGrupoPorID(int idGrupo) {
 		try {
 			connection = ConnectionFactory.getConnection();
-			String sql = "DELETE FROM PROFESSOR WHERE id  = ?";
+			String sql = "DELETE FROM GRUPO WHERE id  = ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setInt(1, idProfessor);
+			preparedStatement.setInt(1, idGrupo);
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			throw new DAOException("Operação não realizada com sucesso.", e);
@@ -67,20 +64,19 @@ public class ProfessorJDBCDAO implements IProfessorDAO {
 		}
 	}
 
-	public List<Professor> listarTodosProfessores() {
-		List<Professor> listaProfessores = new ArrayList<Professor>();
+	public List<Grupo> listarTodosGrupos() {
+		List<Grupo> listaGrupos = new ArrayList<Grupo>();
 		
 		try {
 			connection = ConnectionFactory.getConnection();
-			String sql = "SELECT * FROM PROFESSOR";
+			String sql = "SELECT * FROM GRUPO";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			ResultSet resultSet = preparedStatement.executeQuery();
-								
-			while (resultSet.next()) {
-				Professor professor = map(resultSet);
-				listaProfessores.add(professor);
-			}
 			
+			while (resultSet.next()) {
+				Grupo grupo = map(resultSet);
+				listaGrupos.add(grupo);
+			}
 		} catch (SQLException e) {
 			throw new DAOException("Operação não realizada com sucesso.", e);
 		} finally {
@@ -91,34 +87,31 @@ public class ProfessorJDBCDAO implements IProfessorDAO {
 				throw new DAOException("Não foi possível fechar a conexão.",e);
 			}
 		}
-		return listaProfessores;
+		return listaGrupos;
 	}
 
-	private Professor map(ResultSet rs) throws SQLException {
-		Professor professor = new Professor();
-		UsuarioJDBCDAO ujdbc = new UsuarioJDBCDAO();
-		professor.setId(rs.getInt("id"));
-		professor.setCodigo(rs.getString("codigo"));
-		professor.setId_usuario(rs.getInt("id_usuario"));
-		professor.setNome(ujdbc.procurarPorId(rs.getInt("id_usuario")).getNome());
-		return professor;
+	private Grupo map(ResultSet rs) throws SQLException {
+		Grupo grupo = new Grupo();
+		grupo.setId(rs.getInt("id"));
+		grupo.setNome(rs.getString("nome"));
+		grupo.setProfessor(rs.getInt("id_professor"));
+		return grupo;
 	}
 	
-	public List<Professor> procurarPorNome(String nomeProfessor) {
-		List<Professor> listaProfessores = new ArrayList<Professor>();
+	public List<Grupo> procurarPorNome(String nomeGrupo) {
+		List<Grupo> listaGrupos = new ArrayList<Grupo>();
 		
 		try {
 			connection = ConnectionFactory.getConnection();
-			String sql = "SELECT * FROM USUARIO, PROFESSOR WHERE USUARIO.nome ILIKE ?"
-					+ " AND USUARIO.id = PROFESSOR.id_usuario";
+			String sql = "SELECT * FROM GRUPO WHERE nome ILIKE ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setString(1, "%" + nomeProfessor + "%");
+			preparedStatement.setString(1, "%" + nomeGrupo + "%");
 			
 			ResultSet resultSet = preparedStatement.executeQuery();
 			
 			while (resultSet.next()) {
-				Professor professor = map(resultSet);
-				listaProfessores.add(professor);
+				Grupo grupo = map(resultSet);
+				listaGrupos.add(grupo);
 			}
 		} catch (SQLException e) {
 			throw new DAOException("Operação não realizada com sucesso.", e);
@@ -130,22 +123,22 @@ public class ProfessorJDBCDAO implements IProfessorDAO {
 				throw new DAOException("Não foi possível fechar a conexão.",e);
 			}
 		}
-		return listaProfessores;
-
+		return listaGrupos;
 	}
 
-	public Professor procurarPorId(int idProfessor) {
-		Professor autor = new Professor();
+	public Grupo procurarPorId(int idGrupo) {
+		Grupo grupo = new Grupo();		
 		
 		try {
 			connection = ConnectionFactory.getConnection();
-			String sql = "SELECT * FROM PROFESSOR WHERE PROFESSOR.id = ?";
+			String sql = "SELECT * FROM GRUPO WHERE id = ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setInt(1, idProfessor);
+			preparedStatement.setInt(1, idGrupo);
+			
 			ResultSet resultSet = preparedStatement.executeQuery();
 			
 			while (resultSet.next()) {
-				autor = map(resultSet);
+				grupo = map(resultSet);
 			}
 		} catch (SQLException e) {
 			throw new DAOException("Operação não realizada com sucesso.", e);
@@ -157,8 +150,7 @@ public class ProfessorJDBCDAO implements IProfessorDAO {
 				throw new DAOException("Não foi possível fechar a conexão.",e);
 			}
 		}
-		return autor;
-
+		return grupo;
 	}
 
 }

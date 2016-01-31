@@ -21,7 +21,7 @@ public class EditoraJDBCDAO implements IEditoraDAO {
 	public void cadastrarEditora(Editora editora) {
 		try {
 			connection = ConnectionFactory.getConnection();
-			String insert_sql = "INSERT INTO AREA_LIVRO ("
+			String insert_sql = "INSERT INTO EDITORA ("
 					+ "nome"
 					+ ") VALUES (?)";
 			
@@ -69,7 +69,7 @@ public class EditoraJDBCDAO implements IEditoraDAO {
 		
 		try {
 			connection = ConnectionFactory.getConnection();
-			String sql = "SELECT * FROM AREA_LIVRO";
+			String sql = "SELECT * FROM EDITORA";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			

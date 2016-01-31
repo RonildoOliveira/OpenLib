@@ -40,11 +40,15 @@ public class Professor extends Usuario {
 		this.id = id;
 	}
 
+	@Override
 	public String getNome() {
-		return nome;
+		// TODO Auto-generated method stub
+		return super.getNome();
 	}
-
+	
+	@Override
 	public void setNome(String nome) {
-		this.nome = nome;
+		// TODO Auto-generated method stub
+		super.setNome(nome);
 	}
 }
