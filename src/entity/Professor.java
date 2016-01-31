@@ -3,7 +3,6 @@ package entity;
 public class Professor extends Usuario {
 	
 	private int id;
-	private String nome;
 	private String codigo;
 	private int id_usuario;
 
@@ -42,13 +41,11 @@ public class Professor extends Usuario {
 
 	@Override
 	public String getNome() {
-		// TODO Auto-generated method stub
 		return super.getNome();
 	}
 	
 	@Override
 	public void setNome(String nome) {
-		// TODO Auto-generated method stub
 		super.setNome(nome);
 	}
 }

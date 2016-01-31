@@ -1,16 +1,14 @@
 package main;
 
-import java.util.Iterator;
-
 import dao.GrupoJDBCDAO;
 import dao.ProfessorJDBCDAO;
-import dao.R_LivrosAutoresJDBCDAO;
+import dao.R_Livros_AreasJDBCDAO;
 import dao.UsuarioJDBCDAO;
-import entity.Autor;
+import entity.AreaLivro;
 import entity.Grupo;
 import entity.Livro;
-import entity.Professor;
 import entity.Usuario;
+import entity.relations.Livros_Areas;
 
 public class Main {
 	public static void main(String[] args){
@@ -19,7 +17,7 @@ public class Main {
 		userjdbc.cadastrarUsuario(new Usuario("Flavio","jose","jose@mail","jose.png","Musica"));
 		userjdbc.removerUsuarioPorID(7);
 		
-		R_LivrosAutoresJDBCDAO liat_jdbc = new R_LivrosAutoresJDBCDAO();
+//		R_Livros_AutoresJDBCDAO liat_jdbc = new R_Livros_AutoresJDBCDAO();
 		
 //		for (Autor at : liat_jdbc.procurarAutoresPorNomeLivro("Dados")) {
 //			System.out.println(at.getNome());
@@ -48,6 +46,21 @@ public class Main {
 		
 		for(Grupo g: gjdbc.procurarPorNome("FBD")){
 			System.out.println(g.getNome());
+		}
+		
+		R_Livros_AreasJDBCDAO rLivroAreas = new R_Livros_AreasJDBCDAO();
+		
+			
+		for (Livros_Areas lva : rLivroAreas.listarLivrosAreas()){
+			System.out.println(lva.getAreaLivro().getNome());
+		}
+		
+		for (AreaLivro lva : rLivroAreas.procurarAreaPorNomeLivro("Java")){
+			System.out.println(lva.getNome());
+		}
+		
+		for (Livro lva : rLivroAreas.procurarLivrosPorNomeArea("a")){
+			System.out.println(lva.getTitulo());
 		}
 	}
 	

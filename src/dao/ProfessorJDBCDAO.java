@@ -1,6 +1,5 @@
 package dao;
 
-import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,13 +9,11 @@ import java.util.List;
 
 import dao.interfaces.IProfessorDAO;
 import entity.Professor;
-import entity.Usuario;
 import factory.ConnectionFactory;
 
 public class ProfessorJDBCDAO implements IProfessorDAO {
 
 	private Connection connection = null;
-	private ResultSet resultSetName;
 	
 	public void cadastrarProfessor(Professor professor) {
 		try {

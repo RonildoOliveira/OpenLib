@@ -3,7 +3,6 @@ package dao.interfaces;
 import java.util.List;
 
 import entity.Grupo;
-import entity.Professor;
 
 
 

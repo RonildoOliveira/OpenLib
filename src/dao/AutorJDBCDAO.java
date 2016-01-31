@@ -9,7 +9,6 @@ import java.util.List;
 
 import dao.interfaces.IAutorDAO;
 import entity.Autor;
-import entity.Livro;
 import factory.ConnectionFactory;
 
 public class AutorJDBCDAO implements IAutorDAO {

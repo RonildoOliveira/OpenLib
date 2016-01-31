@@ -2,7 +2,6 @@ package dao.interfaces;
 
 import java.util.List;
 
-import entity.Autor;
 import entity.Livro;
 
 public interface ILivroDAO {

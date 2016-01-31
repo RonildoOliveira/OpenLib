@@ -9,7 +9,6 @@ import java.util.List;
 
 import dao.interfaces.IAreaLivroDAO;
 import entity.AreaLivro;
-import entity.Autor;
 import factory.ConnectionFactory;
 
 public class AreaLivroJDBCDAO implements IAreaLivroDAO {
@@ -75,7 +74,7 @@ public class AreaLivroJDBCDAO implements IAreaLivroDAO {
 			ResultSet resultSet = preparedStatement.executeQuery();
 			
 			while (resultSet.next()) {
-				AreaLivro areaLivro = map(resultSet);
+				AreaLivro areaLivro = mapArea(resultSet);
 				listaAreas.add(areaLivro);
 			}
 		} catch (SQLException e) {
@@ -91,7 +90,7 @@ public class AreaLivroJDBCDAO implements IAreaLivroDAO {
 		return listaAreas;
 	}
 
-	private AreaLivro map(ResultSet rs) throws SQLException {
+	public AreaLivro mapArea(ResultSet rs) throws SQLException {
 		AreaLivro areaLivro = new AreaLivro();
 		areaLivro.setId(rs.getInt("id"));
 		areaLivro.setNome(rs.getString("nome"));
@@ -111,7 +110,7 @@ public class AreaLivroJDBCDAO implements IAreaLivroDAO {
 			ResultSet resultSet = preparedStatement.executeQuery();
 			
 			while (resultSet.next()) {
-				AreaLivro area = map(resultSet);
+				AreaLivro area = mapArea(resultSet);
 				listaAreas.add(area);
 			}
 		} catch (SQLException e) {
@@ -140,7 +139,7 @@ public class AreaLivroJDBCDAO implements IAreaLivroDAO {
 			ResultSet resultSet = preparedStatement.executeQuery();
 			
 			while (resultSet.next()) {
-				areaLivro = map(resultSet);
+				areaLivro = mapArea(resultSet);
 			}
 		} catch (SQLException e) {
 			throw new DAOException("Operação não realizada com sucesso.", e);

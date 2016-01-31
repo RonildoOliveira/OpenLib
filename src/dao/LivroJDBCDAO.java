@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dao.interfaces.ILivroDAO;
-import entity.Autor;
 import entity.Livro;
 import factory.ConnectionFactory;
 

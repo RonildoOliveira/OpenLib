@@ -4,13 +4,13 @@ import java.util.List;
 
 import entity.Autor;
 import entity.Livro;
-import entity.relations.LivrosAutores;
+import entity.relations.Livros_Autores;
 
 
 
 public interface IR_LivrosAutoresDAO {
 
-	public List<LivrosAutores> listarLivrosAutores();
+	public List<Livros_Autores> listarLivrosAutores();
 	
 	public List<Livro> procurarLivrosPorNomeAutor(String nomeAutor);
 	

@@ -7,29 +7,28 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import dao.interfaces.IR_LivrosAutoresDAO;
-import dao.interfaces.IUsuarioDAO;
-import entity.Autor;
+import dao.interfaces.IR_LivrosAreaDAO;
+import entity.AreaLivro;
 import entity.Livro;
-import entity.relations.LivrosAutores;
+import entity.relations.Livros_Areas;
 import factory.ConnectionFactory;
 
-public class R_LivrosAutoresJDBCDAO implements IR_LivrosAutoresDAO {
+public class R_Livros_AreasJDBCDAO implements IR_LivrosAreaDAO {
 
 	private Connection connection = null;
 	
-	public List<LivrosAutores> listarLivrosAutores() {
-		List<LivrosAutores> listaLivrosAutores = new ArrayList<LivrosAutores>();
+	public List<Livros_Areas> listarLivrosAreas() {
+		List<Livros_Areas> listaLivrosAreas = new ArrayList<Livros_Areas>();
 		
 		try {
 			connection = ConnectionFactory.getConnection();
-			String sql = "SELECT * FROM LIVROS_AUTORES";
+			String sql = "SELECT * FROM LIVROS_AREAS";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			
 			while (resultSet.next()) {
-				LivrosAutores usuario = map(resultSet);
-				listaLivrosAutores.add(usuario);
+				Livros_Areas livros_Areas = map(resultSet);
+				listaLivrosAreas.add(livros_Areas);
 			}
 		} catch (SQLException e) {
 			throw new DAOException("Operação não realizada com sucesso.", e);
@@ -41,29 +40,29 @@ public class R_LivrosAutoresJDBCDAO implements IR_LivrosAutoresDAO {
 				throw new DAOException("Não foi possível fechar a conexão.",e);
 			}
 		}
-		return listaLivrosAutores;
+		return listaLivrosAreas;
 	}
 
-	private LivrosAutores map(ResultSet rs) throws SQLException {
-		LivrosAutores livrosAutores = new LivrosAutores();
-		livrosAutores.setId(rs.getInt("id"));
-		livrosAutores.setAutor(rs.getInt("id_autor"));
-		livrosAutores.setLivro(rs.getInt("id_livro"));
-		return livrosAutores;
+	private Livros_Areas map(ResultSet rs) throws SQLException {
+		Livros_Areas livrosAreas = new Livros_Areas();
+		livrosAreas.setId(rs.getInt("id"));
+		livrosAreas.setAreaLivro(rs.getInt("id_area"));
+		livrosAreas.setLivro(rs.getInt("id_livro"));
+		return livrosAreas;
 	}
 	
-	public List<Livro> procurarLivrosPorNomeAutor(String nomeAutor) {
+	public List<Livro> procurarLivrosPorNomeArea(String nomeArea) {
 		List<Livro> listaLivros = new ArrayList<Livro>();
 		
 		try {
 			connection = ConnectionFactory.getConnection();
-			String sql = "SELECT * from LIVRO "
-					+ "INNER JOIN LIVROS_AUTORES ON LIVRO.id = LIVROS_AUTORES.id_livro "
-					+ "INNER JOIN AUTOR ON LIVROS_AUTORES.id_autor = AUTOR.id "
-					+ "AND AUTOR.nome ILIKE ?";
+			String sql = "SELECT * FROM LIVRO "
+					+ "INNER JOIN LIVROS_AREAS ON LIVRO.id = LIVROS_AREAS.id_livro "
+					+ "INNER JOIN AREA_LIVRO ON LIVROS_AREAS.id_area = AREA_LIVRO.id "
+					+ "AND AREA_LIVRO.nome ILIKE ?";
 			
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setString(1, "%" + nomeAutor + "%");
+			preparedStatement.setString(1, "%" + nomeArea + "%");
 			
 			ResultSet resultSet = preparedStatement.executeQuery();
 			
@@ -87,14 +86,14 @@ public class R_LivrosAutoresJDBCDAO implements IR_LivrosAutoresDAO {
 
 	}
 
-	public List<Autor> procurarAutoresPorNomeLivro(String nomeLivro) {
-		List<Autor> listaAutores = new ArrayList<Autor>();
+	public List<AreaLivro> procurarAreaPorNomeLivro(String nomeLivro) {
+		List<AreaLivro> listaAreaLivro = new ArrayList<AreaLivro>();
 		
 		try {
 			connection = ConnectionFactory.getConnection();
-			String sql = "SELECT * from AUTOR "
-					+ "INNER JOIN LIVROS_AUTORES ON LIVROS_AUTORES.id_autor = AUTOR.id "
-					+ "INNER JOIN LIVRO ON LIVRO.id = LIVROS_AUTORES.id_livro "
+			String sql = "SELECT * from AREA_LIVRO "
+					+ "INNER JOIN LIVROS_AREAS ON LIVROS_AREAS.id_area = AREA_LIVRO.id "
+					+ "INNER JOIN LIVRO ON LIVRO.id = LIVROS_AREAS.id_livro "
 					+ "AND LIVRO.titulo ILIKE ? ";
 			
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -103,10 +102,10 @@ public class R_LivrosAutoresJDBCDAO implements IR_LivrosAutoresDAO {
 			ResultSet resultSet = preparedStatement.executeQuery();
 			
 			while (resultSet.next()) {
-				AutorJDBCDAO atjdbc = new AutorJDBCDAO();
+				AreaLivroJDBCDAO arjdbc = new AreaLivroJDBCDAO();
 				
-				Autor autor = atjdbc.mapAutor(resultSet);
-				listaAutores.add(autor);
+				AreaLivro areaLivro = arjdbc.mapArea(resultSet);
+				listaAreaLivro.add(areaLivro);
 			}
 		} catch (SQLException e) {
 			throw new DAOException("Operação não realizada com sucesso.", e);
@@ -118,9 +117,8 @@ public class R_LivrosAutoresJDBCDAO implements IR_LivrosAutoresDAO {
 				throw new DAOException("Não foi possível fechar a conexão.",e);
 			}
 		}
-		return listaAutores;
+		return listaAreaLivro;
 
-	}
-	
+	}	
 
 }

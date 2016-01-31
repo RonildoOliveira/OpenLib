@@ -5,16 +5,16 @@ import dao.LivroJDBCDAO;
 import entity.Autor;
 import entity.Livro;
 
-public class LivrosAutores {
+public class Livros_Autores {
 	private Autor autor;
 	private Livro livro;
 	private int id;
 	
-	public LivrosAutores() {
+	public Livros_Autores() {
 
 	}
 	
-	public LivrosAutores(Livro livro, Autor autor) {
+	public Livros_Autores(Livro livro, Autor autor) {
 		this.livro = livro;
 		this.autor = autor;
 	}

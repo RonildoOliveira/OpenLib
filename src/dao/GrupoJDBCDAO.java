@@ -9,7 +9,6 @@ import java.util.List;
 
 import dao.interfaces.IGrupoDAO;
 import entity.Grupo;
-import entity.Professor;
 import factory.ConnectionFactory;
 
 public class GrupoJDBCDAO implements IGrupoDAO {
