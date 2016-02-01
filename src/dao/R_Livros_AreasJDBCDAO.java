@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dao.interfaces.IR_LivrosAreaDAO;
-import entity.AreaLivro;
+import entity.Area;
 import entity.Livro;
 import entity.relations.Livros_Areas;
 import factory.ConnectionFactory;
@@ -22,7 +22,7 @@ public class R_Livros_AreasJDBCDAO implements IR_LivrosAreaDAO {
 		
 		try {
 			connection = ConnectionFactory.getConnection();
-			String sql = "SELECT * FROM LIVROS_AREAS";
+			String sql = "SELECT * FROM TEM";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			
@@ -45,7 +45,6 @@ public class R_Livros_AreasJDBCDAO implements IR_LivrosAreaDAO {
 
 	private Livros_Areas map(ResultSet rs) throws SQLException {
 		Livros_Areas livrosAreas = new Livros_Areas();
-		livrosAreas.setId(rs.getInt("id"));
 		livrosAreas.setAreaLivro(rs.getInt("id_area"));
 		livrosAreas.setLivro(rs.getInt("id_livro"));
 		return livrosAreas;
@@ -57,9 +56,9 @@ public class R_Livros_AreasJDBCDAO implements IR_LivrosAreaDAO {
 		try {
 			connection = ConnectionFactory.getConnection();
 			String sql = "SELECT * FROM LIVRO "
-					+ "INNER JOIN LIVROS_AREAS ON LIVRO.id = LIVROS_AREAS.id_livro "
-					+ "INNER JOIN AREA_LIVRO ON LIVROS_AREAS.id_area = AREA_LIVRO.id "
-					+ "AND AREA_LIVRO.nome ILIKE ?";
+					+ "INNER JOIN TEM ON LIVRO.id_livro = TEM.id_livro "
+					+ "INNER JOIN AREA ON TEM.id_area = AREA.id_area "
+					+ "AND AREA.nome ILIKE ?";
 			
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setString(1, "%" + nomeArea + "%");
@@ -86,14 +85,14 @@ public class R_Livros_AreasJDBCDAO implements IR_LivrosAreaDAO {
 
 	}
 
-	public List<AreaLivro> procurarAreaPorNomeLivro(String nomeLivro) {
-		List<AreaLivro> listaAreaLivro = new ArrayList<AreaLivro>();
+	public List<Area> procurarAreaPorNomeLivro(String nomeLivro) {
+		List<Area> listaAreaLivro = new ArrayList<Area>();
 		
 		try {
 			connection = ConnectionFactory.getConnection();
-			String sql = "SELECT * from AREA_LIVRO "
-					+ "INNER JOIN LIVROS_AREAS ON LIVROS_AREAS.id_area = AREA_LIVRO.id "
-					+ "INNER JOIN LIVRO ON LIVRO.id = LIVROS_AREAS.id_livro "
+			String sql = "SELECT * from AREA "
+					+ "INNER JOIN TEM ON TEM.id_area = AREA.id_area "
+					+ "INNER JOIN LIVRO ON LIVRO.id_livro = TEM.id_livro "
 					+ "AND LIVRO.titulo ILIKE ? ";
 			
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -102,9 +101,9 @@ public class R_Livros_AreasJDBCDAO implements IR_LivrosAreaDAO {
 			ResultSet resultSet = preparedStatement.executeQuery();
 			
 			while (resultSet.next()) {
-				AreaLivroJDBCDAO arjdbc = new AreaLivroJDBCDAO();
+				AreaJDBCDAO arjdbc = new AreaJDBCDAO();
 				
-				AreaLivro areaLivro = arjdbc.mapArea(resultSet);
+				Area areaLivro = arjdbc.mapArea(resultSet);
 				listaAreaLivro.add(areaLivro);
 			}
 		} catch (SQLException e) {

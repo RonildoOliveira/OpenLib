@@ -3,15 +3,13 @@ package entity;
 public class Professor extends Usuario {
 	
 	private int id;
-	private String codigo;
 	private int id_usuario;
 
 	public Professor() {
 	
 	}
 	
-	public Professor(String codigo, int id_usuario){
-		this.codigo = codigo;
+	public Professor(int id_usuario){
 		this.id_usuario = id_usuario;
 	}
 
@@ -21,14 +19,6 @@ public class Professor extends Usuario {
 
 	public void setId_usuario(int id_usuario) {
 		this.id_usuario = id_usuario;
-	}
-
-	public String getCodigo() {
-		return codigo;
-	}
-
-	public void setCodigo(String codigo) {
-		this.codigo = codigo;
 	}
 
 	public int getId() {

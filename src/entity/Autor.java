@@ -4,15 +4,13 @@ public class Autor extends Usuario {
 	
 	private String nome;
 	private int id;
-	private int id_usuario;
 	
 	public Autor() {
 
 	}
 	
-	public Autor(String nome,int id_usuario) {
+	public Autor(String nome) {
 		this.nome = nome;
-		this.id_usuario = id_usuario;
 	}
 	
 	public int getId() {
@@ -30,14 +28,5 @@ public class Autor extends Usuario {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
-	public int getId_usuario() {
-		return id_usuario;
-	}
-
-	public void setId_usuario(int id_usuario) {
-		this.id_usuario = id_usuario;
-	}
-	
 	
 }

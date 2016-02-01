@@ -20,16 +20,14 @@ public class ProfessorJDBCDAO implements IProfessorDAO {
 			
 			connection = ConnectionFactory.getConnection();
 			String insert_sql = "INSERT INTO PROFESSOR ("
-					+ "codigo,"
 					+ "id_usuario"
-					+ ") VALUES (?, ?)";
+					+ ") VALUES (?)";
 			
 			PreparedStatement preparedStatement;
 			
 			preparedStatement = connection.prepareStatement(insert_sql);
 			
-			preparedStatement.setString(1, professor.getCodigo());
-			preparedStatement.setInt(2, professor.getId_usuario());
+			preparedStatement.setInt(1, professor.getId_usuario());
 						
 			preparedStatement.executeUpdate();
 			
@@ -48,7 +46,7 @@ public class ProfessorJDBCDAO implements IProfessorDAO {
 	public void removerProfessorPorID(int idProfessor) {
 		try {
 			connection = ConnectionFactory.getConnection();
-			String sql = "DELETE FROM PROFESSOR WHERE id  = ?";
+			String sql = "DELETE FROM PROFESSOR WHERE id_professor  = ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(1, idProfessor);
 			preparedStatement.executeUpdate();
@@ -94,8 +92,7 @@ public class ProfessorJDBCDAO implements IProfessorDAO {
 	private Professor map(ResultSet rs) throws SQLException {
 		Professor professor = new Professor();
 		UsuarioJDBCDAO ujdbc = new UsuarioJDBCDAO();
-		professor.setId(rs.getInt("id"));
-		professor.setCodigo(rs.getString("codigo"));
+		professor.setId(rs.getInt("id_professor"));
 		professor.setId_usuario(rs.getInt("id_usuario"));
 		professor.setNome(ujdbc.procurarPorId(rs.getInt("id_usuario")).getNome());
 		return professor;
@@ -106,8 +103,8 @@ public class ProfessorJDBCDAO implements IProfessorDAO {
 		
 		try {
 			connection = ConnectionFactory.getConnection();
-			String sql = "SELECT * FROM USUARIO, PROFESSOR WHERE USUARIO.nome ILIKE ?"
-					+ " AND USUARIO.id = PROFESSOR.id_usuario";
+			String sql = "SELECT * FROM USUARIO, PROFESSOR WHERE USUARIO.nome ILIKE ? "
+					+ "AND USUARIO.id_usuario = PROFESSOR.id_usuario";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setString(1, "%" + nomeProfessor + "%");
 			
@@ -136,7 +133,7 @@ public class ProfessorJDBCDAO implements IProfessorDAO {
 		
 		try {
 			connection = ConnectionFactory.getConnection();
-			String sql = "SELECT * FROM PROFESSOR WHERE PROFESSOR.id = ?";
+			String sql = "SELECT * FROM PROFESSOR WHERE PROFESSOR.id_professor = ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(1, idProfessor);
 			ResultSet resultSet = preparedStatement.executeQuery();

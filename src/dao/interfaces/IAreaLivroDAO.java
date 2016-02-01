@@ -2,20 +2,20 @@ package dao.interfaces;
 
 import java.util.List;
 
-import entity.AreaLivro;
+import entity.Area;
 
 
 
 public interface IAreaLivroDAO {
 
-public void cadastrarArea(AreaLivro areaLivro);
+public void cadastrarArea(Area areaLivro);
 	
 	public void removerAreaPorID(int idArea);
 
-	public List<AreaLivro> listarTodasAreas();
+	public List<Area> listarTodasAreas();
 	
-	public List<AreaLivro> procurarPorNome(String nomeArea);
+	public List<Area> procurarPorNome(String nomeArea);
 	
-	public AreaLivro procurarPorId(int idArea);
+	public Area procurarPorId(int idArea);
 
 }

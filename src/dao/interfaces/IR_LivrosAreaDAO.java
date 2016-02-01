@@ -2,7 +2,7 @@ package dao.interfaces;
 
 import java.util.List;
 
-import entity.AreaLivro;
+import entity.Area;
 import entity.Livro;
 import entity.relations.Livros_Areas;
 
@@ -14,6 +14,6 @@ public interface IR_LivrosAreaDAO {
 	
 	public List<Livro> procurarLivrosPorNomeArea(String nomeArea);
 	
-	public List<AreaLivro> procurarAreaPorNomeLivro(String nomeLivro);
+	public List<Area> procurarAreaPorNomeLivro(String nomeLivro);
 
 }

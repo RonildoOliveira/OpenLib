@@ -1,15 +1,15 @@
 package entity;
 
-public class AreaLivro {
+public class Area {
 	
 	private int id;
 	private String nome;
 	
-	public AreaLivro() {
+	public Area() {
 	
 	}
 	
-	public AreaLivro(String nome){
+	public Area(String nome){
 		this.nome = nome;
 	}
 

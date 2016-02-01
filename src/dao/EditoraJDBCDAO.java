@@ -19,7 +19,7 @@ public class EditoraJDBCDAO implements IEditoraDAO {
 		try {
 			connection = ConnectionFactory.getConnection();
 			String insert_sql = "INSERT INTO EDITORA ("
-					+ "nome"
+					+ "nome_editora"
 					+ ") VALUES (?)";
 			
 			PreparedStatement preparedStatement;
@@ -45,7 +45,7 @@ public class EditoraJDBCDAO implements IEditoraDAO {
 	public void removerEditoraPorID(int idEditora) {
 		try {
 			connection = ConnectionFactory.getConnection();
-			String sql = "DELETE FROM EDITORA WHERE id  = ?";
+			String sql = "DELETE FROM EDITORA WHERE id_editora  = ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(1, idEditora);
 			preparedStatement.executeUpdate();
@@ -89,8 +89,8 @@ public class EditoraJDBCDAO implements IEditoraDAO {
 
 	private Editora map(ResultSet rs) throws SQLException {
 		Editora editora = new Editora();
-		editora.setId(rs.getInt("id"));
-		editora.setNome(rs.getString("nome"));
+		editora.setId(rs.getInt("id_editora"));
+		editora.setNome(rs.getString("nome_editora"));
 		return editora;
 	}
 	
@@ -99,7 +99,7 @@ public class EditoraJDBCDAO implements IEditoraDAO {
 		
 		try {
 			connection = ConnectionFactory.getConnection();
-			String sql = "SELECT * FROM EDITORA WHERE nome ILIKE ?";
+			String sql = "SELECT * FROM EDITORA WHERE nome_editora ILIKE ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setString(1, "%" + nomeEditora + "%");
 			
@@ -127,7 +127,7 @@ public class EditoraJDBCDAO implements IEditoraDAO {
 		
 		try {
 			connection = ConnectionFactory.getConnection();
-			String sql = "SELECT * FROM EDITORA WHERE id = ?";
+			String sql = "SELECT * FROM EDITORA WHERE id_editora = ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(1, idEditora);
 			

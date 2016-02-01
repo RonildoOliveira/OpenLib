@@ -20,23 +20,15 @@ public class AutorJDBCDAO implements IAutorDAO {
 		String insert_sql;
 		try {
 			connection = ConnectionFactory.getConnection();
-			if (autor.getId() != 0) {
-				insert_sql = "INSERT INTO AUTOR (nome,id_usuario) "
-						+ "SELECT USUARIO.nome, USUARIO.id FROM USUARIO WHERE id = 5";
-
-			}else{
-				insert_sql = "INSERT INTO AUTOR ("
-						+ "nome,"
-						+ "id_usuario"
-						+ ") VALUES (?, ?)";
-			}
+			insert_sql = "INSERT INTO AUTOR ("
+					+ "nome_autor"
+					+ ") VALUES (?)";
 			
 			PreparedStatement preparedStatement;
 			
 			preparedStatement = connection.prepareStatement(insert_sql);
 			
 			preparedStatement.setString(1, autor.getNome());
-			preparedStatement.setInt(2, autor.getId_usuario());
 						
 			preparedStatement.executeUpdate();
 			
@@ -56,7 +48,7 @@ public class AutorJDBCDAO implements IAutorDAO {
 	public void removerAutorPorID(int idAutor) {
 		try {
 			connection = ConnectionFactory.getConnection();
-			String sql = "DELETE FROM AUTOR WHERE id  = ?";
+			String sql = "DELETE FROM AUTOR WHERE id_autor  = ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(1, idAutor);
 			preparedStatement.executeUpdate();
@@ -78,7 +70,7 @@ public class AutorJDBCDAO implements IAutorDAO {
 		
 		try {
 			connection = ConnectionFactory.getConnection();
-			String sql = "SELECT * FROM LIVRO";
+			String sql = "SELECT * FROM AUTOR";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			
@@ -101,9 +93,8 @@ public class AutorJDBCDAO implements IAutorDAO {
 
 	public Autor mapAutor(ResultSet rs) throws SQLException {
 		Autor autor = new Autor();
-		autor.setId(rs.getInt("id"));
-		autor.setNome(rs.getString("nome"));
-		autor.setId_usuario(rs.getInt("id_usuario"));
+		autor.setId(rs.getInt("id_autor"));
+		autor.setNome(rs.getString("nome_autor"));
 		return autor;
 	}
 	@Override
@@ -112,7 +103,7 @@ public class AutorJDBCDAO implements IAutorDAO {
 		
 		try {
 			connection = ConnectionFactory.getConnection();
-			String sql = "SELECT * FROM AUTOR WHERE nome ILIKE ?";
+			String sql = "SELECT * FROM AUTOR WHERE nome_autor ILIKE ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setString(1, "%" + nomeAutor + "%");
 			
@@ -142,7 +133,7 @@ public class AutorJDBCDAO implements IAutorDAO {
 		
 		try {
 			connection = ConnectionFactory.getConnection();
-			String sql = "SELECT * FROM AUTOR WHERE id = ?";
+			String sql = "SELECT * FROM AUTOR WHERE id_autor = ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(1, idAutor);
 			

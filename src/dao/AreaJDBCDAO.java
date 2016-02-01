@@ -8,18 +8,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dao.interfaces.IAreaLivroDAO;
-import entity.AreaLivro;
+import entity.Area;
 import factory.ConnectionFactory;
 
-public class AreaLivroJDBCDAO implements IAreaLivroDAO {
+public class AreaJDBCDAO implements IAreaLivroDAO {
 
 	private Connection connection = null;
 	
 	@Override
-	public void cadastrarArea(AreaLivro areaLivro) {
+	public void cadastrarArea(Area areaLivro) {
 		try {
 			connection = ConnectionFactory.getConnection();
-			String insert_sql = "INSERT INTO AREA_LIVRO ("
+			String insert_sql = "INSERT INTO AREA ("
 					+ "nome"
 					+ ") VALUES (?)";
 			
@@ -47,7 +47,7 @@ public class AreaLivroJDBCDAO implements IAreaLivroDAO {
 	public void removerAreaPorID(int idArea) {
 		try {
 			connection = ConnectionFactory.getConnection();
-			String sql = "DELETE FROM AREA_LIVRO WHERE id  = ?";
+			String sql = "DELETE FROM AREA WHERE id_area  = ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(1, idArea);
 			preparedStatement.executeUpdate();
@@ -64,17 +64,17 @@ public class AreaLivroJDBCDAO implements IAreaLivroDAO {
 	}
 
 	@Override
-	public List<AreaLivro> listarTodasAreas() {
-		List<AreaLivro> listaAreas = new ArrayList<AreaLivro>();
+	public List<Area> listarTodasAreas() {
+		List<Area> listaAreas = new ArrayList<Area>();
 		
 		try {
 			connection = ConnectionFactory.getConnection();
-			String sql = "SELECT * FROM AREA_LIVRO";
+			String sql = "SELECT * FROM AREA";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			
 			while (resultSet.next()) {
-				AreaLivro areaLivro = mapArea(resultSet);
+				Area areaLivro = mapArea(resultSet);
 				listaAreas.add(areaLivro);
 			}
 		} catch (SQLException e) {
@@ -90,27 +90,27 @@ public class AreaLivroJDBCDAO implements IAreaLivroDAO {
 		return listaAreas;
 	}
 
-	public AreaLivro mapArea(ResultSet rs) throws SQLException {
-		AreaLivro areaLivro = new AreaLivro();
-		areaLivro.setId(rs.getInt("id"));
+	public Area mapArea(ResultSet rs) throws SQLException {
+		Area areaLivro = new Area();
+		areaLivro.setId(rs.getInt("id_area"));
 		areaLivro.setNome(rs.getString("nome"));
 		return areaLivro;
 	}
 	
 	@Override
-	public List<AreaLivro> procurarPorNome(String nomeArea) {
-		List<AreaLivro> listaAreas = new ArrayList<AreaLivro>();
+	public List<Area> procurarPorNome(String nomeArea) {
+		List<Area> listaAreas = new ArrayList<Area>();
 		
 		try {
 			connection = ConnectionFactory.getConnection();
-			String sql = "SELECT * FROM AREA_LIVRO WHERE nome ILIKE ?";
+			String sql = "SELECT * FROM AREA WHERE nome ILIKE ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setString(1, "%" + nomeArea + "%");
 			
 			ResultSet resultSet = preparedStatement.executeQuery();
 			
 			while (resultSet.next()) {
-				AreaLivro area = mapArea(resultSet);
+				Area area = mapArea(resultSet);
 				listaAreas.add(area);
 			}
 		} catch (SQLException e) {
@@ -127,12 +127,12 @@ public class AreaLivroJDBCDAO implements IAreaLivroDAO {
 	}
 
 	@Override
-	public AreaLivro procurarPorId(int idArea) {
-		AreaLivro  areaLivro = new AreaLivro();		
+	public Area procurarPorId(int idArea) {
+		Area  areaLivro = new Area();		
 		
 		try {
 			connection = ConnectionFactory.getConnection();
-			String sql = "SELECT * FROM AREA_LIVRO WHERE id = ?";
+			String sql = "SELECT * FROM AREA WHERE id_area = ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(1, idArea);
 			

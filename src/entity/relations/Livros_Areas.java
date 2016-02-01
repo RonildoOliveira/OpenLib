@@ -1,13 +1,13 @@
 package entity.relations;
 
-import dao.AreaLivroJDBCDAO;
+import dao.AreaJDBCDAO;
 import dao.LivroJDBCDAO;
-import entity.AreaLivro;
+import entity.Area;
 import entity.Livro;
 
 public class Livros_Areas {
 	
-	private AreaLivro areaLivro;
+	private Area areaLivro;
 	private Livro livro;
 	private int id;
 	
@@ -15,17 +15,17 @@ public class Livros_Areas {
 
 	}
 	
-	public Livros_Areas(Livro livro, AreaLivro areaLivro) {
+	public Livros_Areas(Livro livro, Area areaLivro) {
 		this.livro = livro;
 		this.areaLivro = areaLivro;
 	}
 
-	public AreaLivro getAreaLivro() {
+	public Area getAreaLivro() {
 		return areaLivro;
 	}
 
 	public void setAreaLivro(int idArea) {
-		AreaLivroJDBCDAO arjdbc = new AreaLivroJDBCDAO();
+		AreaJDBCDAO arjdbc = new AreaJDBCDAO();
 		this.areaLivro = arjdbc.procurarPorId(idArea);
 	}
 

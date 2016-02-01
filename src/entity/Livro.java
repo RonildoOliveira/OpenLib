@@ -1,11 +1,11 @@
 package entity;
 
 public class Livro {
-	private int id = 0;
-	private String titulo;
-	private int ano;
+	private int id;
 	private int id_editora;
+	private String titulo;
 	private int num_edicao;
+	private int ano;
 	private String link_capa;
 	private String link_down;
 	private String observacao;

@@ -3,7 +3,7 @@ package entity;
 public class Usuario {
 	private int id;
 	private String nome;
-	private String login;
+	private String senha;
 	private String email;
 	private String link_foto;
 	private String curso;
@@ -14,7 +14,7 @@ public class Usuario {
 	
 	public Usuario(String nome, String login, String email, String link_foto, String curso){
 		this.nome = nome;
-		this.login = login;
+		this.senha = login;
 		this.email = email;
 		this.link_foto = link_foto;
 		this.curso = curso;
@@ -36,12 +36,12 @@ public class Usuario {
 		this.nome = nome;
 	}
 
-	public String getLogin() {
-		return login;
+	public String getSenha() {
+		return senha;
 	}
 
-	public void setLogin(String login) {
-		this.login = login;
+	public void setSenha(String login) {
+		this.senha = login;
 	}
 
 	public String getEmail() {

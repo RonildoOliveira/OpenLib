@@ -20,7 +20,7 @@ public class UsuarioJDBCDAO implements IUsuarioDAO {
 			connection = ConnectionFactory.getConnection();
 			String insert_sql = "INSERT INTO USUARIO ("
 					+ "nome,"
-					+ "login,"
+					+ "senha,"
 					+ "email,"
 					+ "link_foto,"
 					+ "curso"
@@ -31,7 +31,7 @@ public class UsuarioJDBCDAO implements IUsuarioDAO {
 			preparedStatement = connection.prepareStatement(insert_sql);
 			
 			preparedStatement.setString(1, usuario.getNome());
-			preparedStatement.setString(2, usuario.getLogin());
+			preparedStatement.setString(2, usuario.getSenha());
 			preparedStatement.setString(3, usuario.getEmail());
 			preparedStatement.setString(4, usuario.getLink_foto());
 			preparedStatement.setString(5, usuario.getCurso());
@@ -54,7 +54,7 @@ public class UsuarioJDBCDAO implements IUsuarioDAO {
 	public void removerUsuarioPorID(int idUsuario) {
 		try {
 			connection = ConnectionFactory.getConnection();
-			String sql = "DELETE FROM USUARIO WHERE id  = ?";
+			String sql = "DELETE FROM USUARIO WHERE id_usuario  = ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(1, idUsuario);
 			preparedStatement.executeUpdate();
@@ -98,9 +98,9 @@ public class UsuarioJDBCDAO implements IUsuarioDAO {
 
 	private Usuario map(ResultSet rs) throws SQLException {
 		Usuario usuario = new Usuario();
-		usuario.setId(rs.getInt("id"));
+		usuario.setId(rs.getInt("id_usuario"));
 		usuario.setNome(rs.getString("nome"));
-		usuario.setLogin(rs.getString("login"));
+		usuario.setSenha(rs.getString("senha"));
 		usuario.setEmail(rs.getString("email"));
 		usuario.setLink_foto(rs.getString("link_foto"));
 		return usuario;
@@ -140,7 +140,7 @@ public class UsuarioJDBCDAO implements IUsuarioDAO {
 		
 		try {
 			connection = ConnectionFactory.getConnection();
-			String sql = "SELECT * FROM USUARIO WHERE USUARIO.id = ?";
+			String sql = "SELECT * FROM USUARIO WHERE USUARIO.id_usuario = ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(1, idUsuario);
 			ResultSet resultSet = preparedStatement.executeQuery();

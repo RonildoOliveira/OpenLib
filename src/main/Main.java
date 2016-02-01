@@ -3,8 +3,9 @@ package main;
 import dao.GrupoJDBCDAO;
 import dao.ProfessorJDBCDAO;
 import dao.R_Livros_AreasJDBCDAO;
+import dao.R_Livros_AutoresJDBCDAO;
 import dao.UsuarioJDBCDAO;
-import entity.AreaLivro;
+import entity.Area;
 import entity.Grupo;
 import entity.Livro;
 import entity.Usuario;
@@ -17,7 +18,7 @@ public class Main {
 		userjdbc.cadastrarUsuario(new Usuario("Flavio","jose","jose@mail","jose.png","Musica"));
 		userjdbc.removerUsuarioPorID(7);
 		
-//		R_Livros_AutoresJDBCDAO liat_jdbc = new R_Livros_AutoresJDBCDAO();
+		R_Livros_AutoresJDBCDAO liat_jdbc = new R_Livros_AutoresJDBCDAO();
 		
 //		for (Autor at : liat_jdbc.procurarAutoresPorNomeLivro("Dados")) {
 //			System.out.println(at.getNome());
@@ -34,9 +35,9 @@ public class Main {
 //			System.out.println(g.getNome());
 //		}
 		
-//		if (gjdbc.procurarPorId(4)!=null){
-//			System.out.println(gjdbc.procurarPorId(4).getNome());
-//		}
+		if (gjdbc.procurarPorId(4)!=null){
+			System.out.println(gjdbc.procurarPorId(4).getNome());
+		}
 		
 		ProfessorJDBCDAO pjdbc = new ProfessorJDBCDAO();
 		
@@ -55,7 +56,7 @@ public class Main {
 			System.out.println(lva.getAreaLivro().getNome());
 		}
 		
-		for (AreaLivro lva : rLivroAreas.procurarAreaPorNomeLivro("Java")){
+		for (Area lva : rLivroAreas.procurarAreaPorNomeLivro("Java")){
 			System.out.println(lva.getNome());
 		}
 		

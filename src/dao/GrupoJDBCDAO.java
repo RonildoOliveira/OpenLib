@@ -47,7 +47,7 @@ public class GrupoJDBCDAO implements IGrupoDAO {
 	public void removerGrupoPorID(int idGrupo) {
 		try {
 			connection = ConnectionFactory.getConnection();
-			String sql = "DELETE FROM GRUPO WHERE id  = ?";
+			String sql = "DELETE FROM GRUPO WHERE id_grupo  = ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(1, idGrupo);
 			preparedStatement.executeUpdate();
@@ -91,7 +91,7 @@ public class GrupoJDBCDAO implements IGrupoDAO {
 
 	private Grupo map(ResultSet rs) throws SQLException {
 		Grupo grupo = new Grupo();
-		grupo.setId(rs.getInt("id"));
+		grupo.setId(rs.getInt("id_grupo"));
 		grupo.setNome(rs.getString("nome"));
 		grupo.setProfessor(rs.getInt("id_professor"));
 		return grupo;
@@ -130,7 +130,7 @@ public class GrupoJDBCDAO implements IGrupoDAO {
 		
 		try {
 			connection = ConnectionFactory.getConnection();
-			String sql = "SELECT * FROM GRUPO WHERE id = ?";
+			String sql = "SELECT * FROM GRUPO WHERE id_grupo = ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(1, idGrupo);
 			

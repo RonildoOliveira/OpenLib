@@ -60,7 +60,7 @@ public class LivroJDBCDAO implements ILivroDAO {
 	public void removerLivroPorID(int idLivro) {
 		try {
 			connection = ConnectionFactory.getConnection();
-			String sql = "DELETE FROM LIVRO WHERE id  = ?";
+			String sql = "DELETE FROM LIVRO WHERE id_livro  = ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(1, idLivro);
 			preparedStatement.executeUpdate();
@@ -106,7 +106,7 @@ public class LivroJDBCDAO implements ILivroDAO {
 
 	public Livro mapLivro(ResultSet rs) throws SQLException {
 		Livro livro = new Livro();
-		livro.setId(rs.getInt("id"));
+		livro.setId(rs.getInt("id_livro"));
 		livro.setTitulo(rs.getString("titulo"));
 		livro.setAno(rs.getInt("ano"));
 		livro.setId_editora(rs.getInt("id_editora"));
@@ -151,7 +151,7 @@ public class LivroJDBCDAO implements ILivroDAO {
 		Livro livro = null;
 		try {
 			connection = ConnectionFactory.getConnection();
-			String sql = "SELECT * FROM LIVRO WHERE id = ?";
+			String sql = "SELECT * FROM LIVRO WHERE id_livro = ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(1, idLivro);
 			

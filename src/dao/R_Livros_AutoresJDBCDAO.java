@@ -22,7 +22,7 @@ public class R_Livros_AutoresJDBCDAO implements IR_LivrosAutoresDAO {
 		
 		try {
 			connection = ConnectionFactory.getConnection();
-			String sql = "SELECT * FROM LIVROS_AUTORES";
+			String sql = "SELECT * FROM ESCREVE";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			
@@ -45,7 +45,6 @@ public class R_Livros_AutoresJDBCDAO implements IR_LivrosAutoresDAO {
 
 	private Livros_Autores map(ResultSet rs) throws SQLException {
 		Livros_Autores livrosAutores = new Livros_Autores();
-		livrosAutores.setId(rs.getInt("id"));
 		livrosAutores.setAutor(rs.getInt("id_autor"));
 		livrosAutores.setLivro(rs.getInt("id_livro"));
 		return livrosAutores;
@@ -57,9 +56,9 @@ public class R_Livros_AutoresJDBCDAO implements IR_LivrosAutoresDAO {
 		try {
 			connection = ConnectionFactory.getConnection();
 			String sql = "SELECT * from LIVRO "
-					+ "INNER JOIN LIVROS_AUTORES ON LIVRO.id = LIVROS_AUTORES.id_livro "
-					+ "INNER JOIN AUTOR ON LIVROS_AUTORES.id_autor = AUTOR.id "
-					+ "AND AUTOR.nome ILIKE ?";
+					+ "INNER JOIN ESCREVE ON LIVRO.id_livro = ESCREVE.id_livro "
+					+ "INNER JOIN AUTOR ON ESCREVE.id_autor = AUTOR.id_autor "
+					+ "AND AUTOR.nome_autor ILIKE ?";
 			
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setString(1, "%" + nomeAutor + "%");
@@ -92,8 +91,8 @@ public class R_Livros_AutoresJDBCDAO implements IR_LivrosAutoresDAO {
 		try {
 			connection = ConnectionFactory.getConnection();
 			String sql = "SELECT * from AUTOR "
-					+ "INNER JOIN LIVROS_AUTORES ON LIVROS_AUTORES.id_autor = AUTOR.id "
-					+ "INNER JOIN LIVRO ON LIVRO.id = LIVROS_AUTORES.id_livro "
+					+ "INNER JOIN ESCREVE ON ESCREVE.id_autor = AUTOR.id_autor "
+					+ "INNER JOIN LIVRO ON LIVRO.id_livro = ESCREVE.id_livro "
 					+ "AND LIVRO.titulo ILIKE ? ";
 			
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
